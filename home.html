@@ -19,14 +19,16 @@
       <!-- push a new message into the array -->
     <ul>
       <li style="color:white" ng-repeat="resource in resources | orderBy:'upvotes':true">
-        {{resource.name}}
+        <!-- {{resource.name}}
         {{resource.language}}
         {{resource.cost}}
         {{resource.type}}
-        {{resource.upvotes}}
+        votes: {{resource.upvotes}} -->
+        {{resource}}
         <!-- {{resource.downvotes}} -->
         <!-- <input ng-model="resource.name" ng-change="resources.$save(resources)" /> -->
         <!-- <button ng-click="resources.$remove(resource)">X</button> -->
+        <button ng-click="sync.$set("foo", "bar");">I like this!</button>
       </li>
     </ul>
       
@@ -43,14 +45,23 @@
 <script>
   var app = angular.module("codehuntApp", ["firebase"]);
   app.controller("CodehuntCtrl",
-   function($scope, $firebase) {
-      var ref = new Firebase("https://codehunt.firebaseio.com/resources");
-      var sync = $firebase(ref);
-      $scope.resources = sync.$asArray();
-      $scope.addResource = function(n,l,c,t,u,d) {
+ function($scope, $firebase) {
+    var ref = new Firebase("https://codehunt.firebaseio.com/resources");
+    var sync = $firebase(ref);
+    $scope.resources = sync.$asArray();
+    $scope.addResource = function(n,l,c,t,u,d) {
       $scope.resources.$add({name: n, language: l, cost: c, type: t, upvotes: u, downvotes: d});
     }
+    $scope.addVote = function() {
+      // $scope.plusOne = $scope.resource."upvotes"++;
+      // sync.$set($scope.resource."upvotes", plusOne);
+    }
   });
+
+
+  function upvote(resource) {
+    
+  };
 </script>
   
 </body>
