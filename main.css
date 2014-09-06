@@ -10,34 +10,12 @@
 }
 
 body{
+  font-family: 'proxima-nova', 'Proxima Nova', sans-serif;
   width:100%;
-  min-width: 1024px;
-  min-height: 1024px;
   position:absolute;
-  overflow:hidden;
   margin:0;
   padding:0;
-  background-size:100%
 }
-/*.background-image {
-  float-left;
-  position: fixed;
-  left: 0;
-  right: 0;
-  z-index: 1;
-
-  display: block;
-  background-image: url('images/bd.jpg');
-  width: 1200px;
-  height: 800px;
-
-  -webkit-filter: blur(5px);
-  -moz-filter: blur(5px);
-  -o-filter: blur(5px);
-  -ms-filter: blur(5px);
-  filter: blur(5px);
-}*/
-
 
 /*---------------------
 SEARCHBOX
@@ -176,17 +154,18 @@ SEARCHBOX
 /*---------------------
 SEARCH RESULTS HEADER
 ---------------------*/
-.head {
+.headSearch {
 	width:100%;
-	height:700px;
-	background: url(images/bd.jpg) no-repeat; 
+	height:100px;
+	background: url(images/headbg.png) no-repeat; 
 
 }
-
+.searchbox {
+	padding-top:15px;
+}
 /*---------------------
 SEARCHBOX RESULTS
 ----------------------*/
-
 .cf:before, .cf:after{
     content:"";
     display:table;
@@ -203,7 +182,7 @@ SEARCHBOX RESULTS
 .results {
     width: 450px;
     padding: 15px;
-    margin: 150px auto 50px auto;
+    margin: 0px auto 50px auto;
     background: #444;
     background: rgba(0,0,0,.2);
     border-radius: 10px;
@@ -211,7 +190,7 @@ SEARCHBOX RESULTS
 }
  
 /* Form text input */
- 
+
 .results input {
     width: 330px;
     height: 20px;
@@ -316,4 +295,56 @@ SEARCHBOX RESULTS
    color: #9c9c9c;
    font-style: italic;
 }
+
+/*-------------------
+RESULTS LIST
+-------------------*/
+.content {
+	color: #534540;
+	width:900px;
+	margin-left: auto;
+}
+.content ul li{
+	list-style-type: none;
+	font-size:20px;
+	line-height:17px;
+	padding-top:15px;
+	clear:both;
+	cursor:pointer;
+}
+.content ul li a {
+	margin-left:5px;
+	color: #c42f2f;
+	padding-right:80px;
+	text-decoration: none;
+}
+.content ul li p {
+	display:inline-block;
+}
+li:last-child {
+    margin-right: 0;
+    padding-right: 0;
+}
+
+.content ul li a:hover {
+	text-decoration: underline;
+	color:#930a0a;
+}
+/*-------------------
+RATE BUTTON
+-------------------*/
+
+.button {
+	display:inline-block;
+	width: 0; 
+	height: 0; 
+	border-left: 5px solid transparent;
+	border-right: 5px solid transparent;	
+	border-bottom: 5px solid black;
+}
+.button a:hover{
+	color:#c8c7c9;
+}
+
+
 
