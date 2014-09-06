@@ -28,7 +28,7 @@
         <!-- {{resource.downvotes}} -->
         <!-- <input ng-model="resource.name" ng-change="resources.$save(resources)" /> -->
         <!-- <button ng-click="resources.$remove(resource)">X</button> -->
-        <button ng-click="sync.$set("foo", "bar");">I like this!</button>
+        <button ng-click="addVote(resource)">I like this!</button>
       </li>
     </ul>
       
@@ -52,9 +52,14 @@
     $scope.addResource = function(n,l,c,t,u,d) {
       $scope.resources.$add({name: n, language: l, cost: c, type: t, upvotes: u, downvotes: d});
     }
-    $scope.addVote = function() {
+    $scope.addVote = function(resource) {
       // $scope.plusOne = $scope.resource."upvotes"++;
       // sync.$set($scope.resource."upvotes", plusOne);
+      ref.child(resource.name+"/upvotes").once("value", function(snapshot){
+        var data = snapshot.val();
+        data++;
+        ref.child(resource.name+"/upvotes").set(data);
+      });
     }
   });
 
