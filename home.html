@@ -1,14 +1,49 @@
 <!DOCTYPE html>
-<html lang="en" class="bg">
+<html lang="en" class="bg" ng-app="codehuntApp">
 <head>
 	<meta charset="UTF-8">
 	<link rel="stylesheet" type="text/css" href="main.css">
 	<title>CodeHunt</title>
+    <!-- AngularJS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.0-beta.19/angular.min.js"></script>
+    <!-- Firebase -->
+    <script src="https://cdn.firebase.com/js/client/1.0.21/firebase.js"></script>
+    <!-- AngularFire -->
+    <script src="https://cdn.firebase.com/libs/angularfire/0.8.2/angularfire.min.js"></script>
 </head>
-<body>
+<body ng-controller="CodehuntCtrl">
 	<form class="form-wrapper cf">
         <input type="text" placeholder="HTML, CSS, JS, Python,..." required>
         <button type="submit">Search</button>
-    </form> 
+    </form>
+      <!-- push a new message into the array -->
+    <ul>
+      <li ng-repeat="resource in resources">
+        <!-- exit a message -->
+        <input ng-model="resource.text" ng-change="resources.$save(resources)" />
+        <!-- delete message -->
+        <button ng-click="resources.$remove(resource)">X</button>
+      </li>
+    </ul>
+      
+    <!-- push a new message into the array -->
+    <form ng-submit="addResource(newResource)">
+      <input ng-model="newResource" />
+      <button type="submit">add resource</button>
+    </form>
+  
+<script>
+  var app = angular.module("codehuntApp", ["firebase"]);
+  app.controller("CodehuntCtrl",
+   function($scope, $firebase) {
+      var ref = new Firebase("https://codehunt.firebaseio.com/resources");
+      var sync = $firebase(ref);
+      $scope.resources = sync.$asArray();
+      $scope.addResource = function(text) {
+      $scope.resources.$add({text: text});
+    }
+  });
+</script>
+  
 </body>
 </html>
