@@ -18,17 +18,25 @@
     </form>
       <!-- push a new message into the array -->
     <ul>
-      <li ng-repeat="resource in resources">
-        <!-- exit a message -->
-        <input ng-model="resource.text" ng-change="resources.$save(resources)" />
-        <!-- delete message -->
-        <button ng-click="resources.$remove(resource)">X</button>
+      <li style="color:white" ng-repeat="resource in resources | orderBy:'upvotes':true">
+        {{resource.name}}
+        {{resource.language}}
+        {{resource.cost}}
+        {{resource.type}}
+        {{resource.upvotes}}
+        <!-- {{resource.downvotes}} -->
+        <!-- <input ng-model="resource.name" ng-change="resources.$save(resources)" /> -->
+        <!-- <button ng-click="resources.$remove(resource)">X</button> -->
       </li>
     </ul>
       
-    <!-- push a new message into the array -->
-    <form ng-submit="addResource(newResource)">
-      <input ng-model="newResource" />
+    <form ng-submit="addResource(name, language, cost, type, upvotes, downvotes)">
+      <input ng-model="name" />
+      <input ng-model="language" />
+      <input ng-model="cost" />
+      <input ng-model="type" />
+      <input ng-model="upvotes" type="number"/>
+      <input ng-model="downvotes" type="number" />
       <button type="submit">add resource</button>
     </form>
   
@@ -39,8 +47,8 @@
       var ref = new Firebase("https://codehunt.firebaseio.com/resources");
       var sync = $firebase(ref);
       $scope.resources = sync.$asArray();
-      $scope.addResource = function(text) {
-      $scope.resources.$add({text: text});
+      $scope.addResource = function(n,l,c,t,u,d) {
+      $scope.resources.$add({name: n, language: l, cost: c, type: t, upvotes: u, downvotes: d});
     }
   });
 </script>
