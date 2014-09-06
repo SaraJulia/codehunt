@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+    <head>
+        <meta charset="utf-8">
+        <title>Popular Programming Languages of 2014</title>
+    </head>
+<style type="text/css">
+
+.chart circle {
+  /*fill: steelblue;*/
+  opacity: 50%;
+}
+
+
+.chart text {
+  fill: white;
+  font: 10px sans-serif;
+  text-anchor: middle;
+}
+
+</style>
+<h1>Popular Programming Languages of 2014</h1>
+<svg class="chart"></svg>
+<script src="http://d3js.org/d3.v3.min.js"></script>
+<script>
+
+//Our boring data
+//var data = [4, 8, 15, 16, 23, 42];
+var data = [{key: "Python", value: 30.30}, {key: "Java", value: 22.20}, {key: "C++", value: 13.00}, {key: "Ruby", value: 10.60}, {key: "JavaScript", value: 5.20}, {key: "C#", value: 5.00}, {key: "C", value: 4.10}, {key: "PHP", value: 3.30}, {key: "Perl", value: 1.60}, {key: "Go", value: 1.5}];
+
+
+//define the width as a variable so that you can use it to define multiple things and change it in one place if you need to
+var width = window.innerWidth,
+   // barHeight = 20,
+    height = window.innerHeight;
+var color = d3.scale.category20();
+
+//our good old scale
+var x = d3.scale.linear()
+    .domain([0, d3.max(data)])
+    .range([0, width]);
+
+//select the element with the chart class and define width and height
+var chart = d3.select(".chart")
+    .attr("width", width)
+    .attr("height", height);
+
+
+//create groups for bars
+console.log(data.value);
+var bar = chart.selectAll("g")
+    .data(data)
+  	.enter().append("g")
+    .attr("transform", function(d, i) { return "translate("+ Math.random() * 1000 + 1000 + "," + Math.random() * 2000 + (i+1) * 100 + ")"; });//
+
+//creates the circles
+
+bar.append("circle")
+    .attr("r", function(d) { return +d.value * 5; })
+    // .attr("cx", function(d, i) { return Math.random() * 720 + d * 2; })
+    .attr('stroke', function(d, i) {return color(i)})
+    .attr('fill', function(d, i) {return color(i)})
+    .attr('fill-opacity', 0.5)
+    .attr("dy", function(d, i) { return  i * 20 + i * 2; });
+
+// d3.selectAll('circle')
+bar.append('text')
+  .attr('fill', 'darkgray')
+  .attr('text-anchor', 'middle')
+  .text(function(d){return d.key;});
+  
+  
+bar.transition()
+	.attr("transform",function(d, i) { return "translate("+ Math.random() * 800 +"," + Math.random() * 300 + i * 2 + ")"; })
+	.delay(function(d, i){return i *500;});
+
+</script>

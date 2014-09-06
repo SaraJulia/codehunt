@@ -302,7 +302,9 @@ RESULTS LIST
 .content {
 	color: #534540;
 	width:900px;
+	height:350px;
 	margin-left: auto;
+	background-color:white;
 }
 .content ul li{
 	list-style-type: none;
