@@ -55,10 +55,10 @@
     $scope.addVote = function(resource) {
       // $scope.plusOne = $scope.resource."upvotes"++;
       // sync.$set($scope.resource."upvotes", plusOne);
-      ref.child(resource.name+"/upvotes").once("value", function(snapshot){
+      ref.child(resource.id+"/upvotes").once("value", function(snapshot){
         var data = snapshot.val();
         data++;
-        ref.child(resource.name+"/upvotes").set(data);
+        ref.child(resource.id+"/upvotes").set(data);
       });
     }
   });
