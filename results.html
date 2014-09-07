@@ -1,11 +1,17 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" ng-app="codehuntApp">
 <head>
 	<meta charset="UTF-8">
 	<link rel="stylesheet" type="text/css" href="main.css">
-	<title>Search Results</title>
+	<title>CodeHunt</title>
+    <!-- AngularJS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.0-beta.19/angular.min.js"></script>
+    <!-- Firebase -->
+    <script src="https://cdn.firebase.com/js/client/1.0.21/firebase.js"></script>
+    <!-- AngularFire -->
+    <script src="https://cdn.firebase.com/libs/angularfire/0.8.2/angularfire.min.js"></script>
 </head>
-<body>
+<body ng-controller="CodehuntCtrl">
 	<div class="headSearch">
 	<div class="searchbox">
 		<form class="results cf">
@@ -16,12 +22,21 @@
 	</div>
 	<div class="content">
 		<ul>
-			<li>
+			<li ng-repeat="resource in resources | orderBy:'upvotes':true">
+		        <span class="button" ng-click="addVote(resource)">
+		        </span>
+		        <p>{{resource.upvotes}}</p>
+		        <a href="#">{{resource.name}}</a>
+		        <p>${{resource.price}} | {{resource.type}}</p>
+	      	</li>
+			<!-- <li>
 				<span class="button">
 					<a href="#"></a>
 				</span>
 				<a href="#">CodeAcademy.com</a>
-				<p>Free | Course</p><br>
+				<p>Free | Course</p>
+			</li>
+			<li>
 				<span class="button">
 					<a href="#"></a>
 				</span>
@@ -42,8 +57,42 @@
 				</span>
 				<a href="#">Udemy.com</a>
 				<p>Limited | Video Courses</p>
-			</li>	
-		</ul>			
+			</li>	 -->
+		</ul>	
+<!-- 		 <form ng-submit="addResource(name, language, price, type, upvotes, downvotes)">
+      <input ng-model="name" placeholder="name"/>
+      <input ng-model="language" placeholder="language"/>
+      <input ng-model="price" placeholder="price"/>
+      <input ng-model="type" placeholder="type"/>
+      <input ng-model="upvotes" type="number" placeholder="upvotes"/>
+      <button type="submit">add resource</button>
+    	</form>	 -->	
 	</div>
+	<script>
+  var app = angular.module("codehuntApp", ["firebase"]);
+  app.controller("CodehuntCtrl",
+ function($scope, $firebase) {
+    var ref = new Firebase("https://codehunt.firebaseio.com/resources");
+    var sync = $firebase(ref);
+    $scope.resources = sync.$asArray();
+    $scope.addResource = function(n,l,p,t,u,d) {
+      $scope.resources.$add({id: n, name: n, language: l, price: p, type: t, upvotes: u, downvotes: d});
+    }
+    $scope.addVote = function(resource) {
+      // $scope.plusOne = $scope.resource."upvotes"++;
+      // sync.$set($scope.resource."upvotes", plusOne);
+      ref.child(resource.id+"/upvotes").once("value", function(snapshot){
+        var data = snapshot.val();
+        data++;
+        ref.child(resource.id+"/upvotes").set(data);
+      });
+    }
+  });
+
+
+  function upvote(resource) {
+    
+  };
+</script>
 </body>
 </html>
