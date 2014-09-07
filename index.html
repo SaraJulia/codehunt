@@ -1,0 +1,76 @@
+<html>
+	<head>
+	<style>
+	body { max-width: 800px;}
+	ul#chat-buffer { 
+  		list-style: none;
+  		padding-left: 0;
+	}
+
+	ul#chat-buffer li:nth-child(even) { background-color: #EEE; }
+	</style>
+	<script src="https://code.jquery.com/jquery-1.11.0.min.js"></script> 
+	<script src='https://cdn.firebase.com/js/client/1.0.15/firebase.js'></script>
+	</head>
+
+	<body>
+
+	<form>
+		<input placeholder="course name" type="text" id="coursenameInput">
+		<!-- <input placeholder="language" type="text" id="languageInput"> -->
+		<input placeholder="cost" type="text" id="costInput">
+		<input placeholder="type" type="text" id="typeInput">
+
+		<input type="submit" id="submit">
+	</form>
+
+<br>
+<br>
+
+<!--
+<div id = "resourceList">
+</div>
+-->
+<ul id="resourceList">
+</ul>
+
+
+<script>
+$( document ).ready(function() {
+  console.log("hello world!");
+  	var CHBaseRef = new Firebase("https://codehunt.firebaseio.com/");
+	
+	$("#submit").click(function(){
+
+        var name = $('#coursenameInput').val();
+        var id = $('#coursenameInput').val();
+        // var language = $('#languageInput').val();
+        var cost = $('#costInput').val();
+        var type = $('#typeInput').val();
+        var upvotes = 1;
+        var downvotes = 0;
+
+        
+//         var newResourceRef = CHBaseRef.push();
+    	CHBaseRef.child("resources/"+name).set({
+        id: name,
+    		name: name,
+    		language: '',
+    		price: cost,
+    		type:type,
+    		upvotes: upvotes,
+    		downvotes: downvotes
+    	});
+//         	newResourceRef.set({name: name, language: language, cost: cost, type:type});
+
+      CHBaseRef.child("resources").on('value', function(snapshot) {
+        var resource = snapshot.val();
+        $("#resourceList").append("<li>"+resource.name+"</li>");
+    });
+
+	});
+});
+</script>
+
+</body>
+</html>
