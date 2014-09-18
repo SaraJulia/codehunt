@@ -306,6 +306,7 @@ RESULTS LIST
 	height:350px;
 	margin-left: auto;
 	background-color:white;
+  opacity: 0.7;
 }
 .content ul li{
 	list-style-type: none;
